@@ -55,7 +55,7 @@
         </div>
         <a href="{{ route('preparation.view') }}" class="menu-button">الحضور / الإنصراف</a>
         <a href="{{ route('question.view') }}" class="menu-button">الإستبيان</a>
-        <a href="#agenda" class="menu-button">الأجندة</a>
+        <a href="{{ asset('files/Agenda.pdf') }}" class="menu-button" target="_blank">الأجندة</a>
         <a href="{{ asset('files/guide.pdf') }}" class="menu-button" target="_blank">الدليل الإرشادي</a>
         <a href="https://www.google.com/maps/place/%D9%81%D9%86%D8%AF%D9%82+%D9%85%D8%A7%D9%86%D8%B3%D8%A7%D8%B1%D8%AF+%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6%D8%8C+%D8%B1%D8%A7%D8%AF%D9%8A%D8%B3%D9%88%D9%86+%D9%83%D9%88%D9%84%D9%8A%D9%83%D8%B4%D9%86%E2%80%AD/@24.7836736,46.6528016,17z/data=!3m1!4b1!4m9!3m8!1s0x3e2ee322ac19326f:0x22b5b911df192888!5m2!4m1!1i2!8m2!3d24.7836736!4d46.6528016!16s%2Fg%2F11dd_rlqxy?entry=ttu&g_ep=EgoyMDI1MDQxNi4xIKXMDSoASAFQAw%3D%3D" class="menu-button" target="_blank">موقع فندق مانسارد</a>
         <a href="#" class="menu-button" onclick="showContactModal(event)">تواصل معنا</a>
@@ -65,7 +65,11 @@
     <div id="contactModal" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center;">
         <div style="background: white; padding: 30px; border-radius: 10px; text-align: center; max-width: 400px; width: 90%;">
             <h5 style="margin-bottom: 15px;">📞 للتواصل معنا</h5>
-            <p dir="ltr" style="font-size: 18px; text-align: center;"><strong>+966 530 168 063</strong></p>
+            <p dir="ltr" style="font-size: 18px; text-align: center;">
+                <a href="https://wa.me/966530168063" target="_blank" style="text-decoration: none; color: inherit;">
+                    <strong>+966 530 168 063</strong>
+                </a>
+            </p>
             <button onclick="hideContactModal()" style="margin-top: 20px; padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 8px;">إغلاق</button>
         </div>
     </div>
