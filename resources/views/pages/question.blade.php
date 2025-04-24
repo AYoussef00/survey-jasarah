@@ -21,7 +21,10 @@
             border-radius: 15px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
             padding: 30px;
-            text-align: right;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .question {
             margin-bottom: 20px;
@@ -37,6 +40,8 @@
             font-weight: bold;
             display: block;
             margin-bottom: 10px;
+            text-align: center;
+            width: 100%;
         }
         .options label {
             display: block;
@@ -81,43 +86,146 @@
         .home-link:hover {
             text-decoration: underline;
         }
+        .star-rating {
+            direction: ltr;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .star {
+            font-size: 2rem;
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .star.selected,
+        .star:hover,
+        .star:hover ~ .star {
+            color: #f0ad4e;
+        }
+        .menu-button.small-button {
+            font-size: 14px;
+            padding: 10px 20px;
+            width: auto;
+        }
+        .bordered-button {
+            border: 2px solid #28a745;
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .bordered-button:hover {
+            background-color: #28a745;
+            color: #fff;
+            transform: scale(1.05);
+        }
+        .black-text {
+            color: black;
+            text-decoration: none;
+        }
+        .black-text:hover {
+            color: black;
+            background-color: transparent;
+        }
+        .star.hovered {
+            color: #f0ad4e;
+        }
     </style>
 </head>
 <body>
 
     <div class="form-container">
-        <form method="POST" action="#">
+
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        <form method="POST" action="{{ route('responses.store') }}">
             @csrf
 
-            <div id="question-1" class="question active">
-                <label>ما رأيك في جودة التدريب؟</label>
-                <div class="options">
-                    <input type="radio" name="q1" id="q1_1" value="ضعيف جدا" onclick="nextQuestion(1)"><label for="q1_1">ضعيف جدا</label>
-                    <input type="radio" name="q1" id="q1_2" value="ضعيف" onclick="nextQuestion(1)"><label for="q1_2">ضعيف</label>
-                    <input type="radio" name="q1" id="q1_3" value="جيد" onclick="nextQuestion(1)"><label for="q1_3">جيد</label>
-                    <input type="radio" name="q1" id="q1_4" value="جيد جدا" onclick="nextQuestion(1)"><label for="q1_4">جيد جدا</label>
-                    <input type="radio" name="q1" id="q1_5" value="رائع" onclick="nextQuestion(1)"><label for="q1_5">رائع</label>
+            <div id="user-info" class="question active">
+                <label for="username">من فضلك أدخل اسمك بالكامل:</label>
+                <input type="text" name="name" id="name" class="form-control mb-3" required>
+                <button type="button" class="submit-btn" onclick="goToFirstQuestion()">التالي</button>
+                <div class="d-flex justify-content-center">
+                    <a href="{{ url('/') }}" class="home-link">العودة إلى الصفحة الرئيسية</a>
                 </div>
             </div>
 
-            <div id="question-2" class="question">
-                <label>ما رأيك في المدرب؟</label>
-                <div class="options">
-                    <input type="radio" name="q2" id="q2_1" value="ضعيف جدا" onclick="nextQuestion(2)"><label for="q2_1">ضعيف جدا</label>
-                    <input type="radio" name="q2" id="q2_2" value="ضعيف" onclick="nextQuestion(2)"><label for="q2_2">ضعيف</label>
-                    <input type="radio" name="q2" id="q2_3" value="جيد" onclick="nextQuestion(2)"><label for="q2_3">جيد</label>
-                    <input type="radio" name="q2" id="q2_4" value="جيد جدا" onclick="nextQuestion(2)"><label for="q2_4">جيد جدا</label>
-                    <input type="radio" name="q2" id="q2_5" value="رائع" onclick="nextQuestion(2)"><label for="q2_5">رائع</label>
-                </div>
-            </div>
+            @foreach($questions as $index => $question)
+            <input type="hidden" name="question_id[]" value="{{ $question->id }}">
 
-            <!-- Add more questions similarly -->
+            @if ($index == 3 || $index == 4)
+                <div id="question-{{ $index + 1 }}" class="question">
+                    <div class="d-flex justify-content-center">
+                        <p class="question-progress small text-secondary mb-3">السؤال {{ $index + 1 }} من {{ count($questions) }}</p>
+                    </div>
+                    <label>{{ $question->question_text }}</label>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="#" class="menu-button small-button bordered-button black-text" onclick="event.preventDefault(); document.querySelector('input[name=\'responses[{{ $question->id }}]\'][value=\'نعم\']').checked = true; nextQuestion({{ $index + 1 }});">نعم</a>
+                        <a href="#" class="menu-button small-button bordered-button black-text" onclick="event.preventDefault(); document.querySelector('input[name=\'responses[{{ $question->id }}]\'][value=\'لا\']').checked = true; nextQuestion({{ $index + 1 }});">لا</a>
+                    </div>
+                    <input type="radio" name="responses[{{ $question->id }}]" value="نعم" style="display:none;" required>
+                    <input type="radio" name="responses[{{ $question->id }}]" value="لا" style="display:none;">
+                    <input type="hidden" name="answers[{{ $question->id }}]" value="نعم">
+                    <div class="d-flex justify-content-center">
+                        <a href="{{ url('/') }}" class="home-link">العودة إلى الصفحة الرئيسية</a>
+                    </div>
+                </div>
+            @elseif ($index == count($questions) - 1)
+                <div id="question-{{ $index + 1 }}" class="question">
+                    <div class="d-flex justify-content-center">
+                        <p class="question-progress small text-secondary mb-3">السؤال {{ $index + 1 }} من {{ count($questions) }}</p>
+                    </div>
+                    <label>{{ $question->question_text }}</label>
+                    <input type="hidden" name="responses[{{ $question->id }}]" value="0">
+
+                    <!-- حقل الملاحظات الاختياري -->
+                    <div class="mt-3">
+                        <label for="notes" class="form-label">ملاحظات إضافية (اختياري):</label>
+                        <textarea name="responses[{{ $question->id }}][notes]" id="notes" class="form-control" rows="3" placeholder="أضف ملاحظاتك إن وجدت..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">إرسال إجابتك</button>
+                    <div class="d-flex justify-content-center">
+                        <a href="{{ url('/') }}" class="home-link">العودة إلى الصفحة الرئيسية</a>
+                    </div>
+                </div>
+            @else
+                <div id="question-{{ $index + 1 }}" class="question">
+                    <div class="d-flex justify-content-center">
+                        <p class="question-progress small text-secondary mb-3">السؤال {{ $index + 1 }} من {{ count($questions) }}</p>
+                    </div>
+                    <label>{{ $question->question_text }}</label>
+                    <div class="options star-rating" data-question="{{ $index + 1 }}">
+                        @for ($i = 1; $i <= 5; $i++)
+                            <span class="star" data-value="{{ $i }}">&#9733;</span>
+                        @endfor
+                        <input type="hidden" name="responses[{{ $question->id }}][rating]" id="q{{ $index + 1 }}" value="0">
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a href="{{ url('/') }}" class="home-link">العودة إلى الصفحة الرئيسية</a>
+                    </div>
+                </div>
+            @endif
+            @endforeach
 
             <div id="thank-you-message" class="question">
                 <p class="thank-you-message">شكرًا لك على إجابتك!</p>
-                <a href="{{ url('/') }}" class="home-link">العودة إلى الصفحة الرئيسية</a>
+                <button type="submit" class="submit-btn">إرسال الإجابات</button>
+                <div class="d-flex justify-content-center">
+                    <a href="{{ url('/') }}" class="home-link">العودة إلى الصفحة الرئيسية</a>
+                </div>
             </div>
-
         </form>
     </div>
 
@@ -131,7 +239,6 @@
                     nextQuestionEl.classList.add('active');
                 }, 500);
             } else {
-                // Show the thank you message after the last question
                 const thankYouMessage = document.getElementById('thank-you-message');
                 currentQuestion.classList.remove('active');
                 setTimeout(() => {
@@ -139,6 +246,51 @@
                 }, 500);
             }
         }
+
+        function goToFirstQuestion() {
+            const nameInput = document.getElementById('name');
+            if (nameInput.value.trim() === '') {
+                alert('يرجى إدخال الاسم أولاً');
+                return;
+            }
+            document.getElementById('user-info').classList.remove('active');
+            document.getElementById('question-1').classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.star-rating').forEach(rating => {
+                // اجعل ترتيب النجوم من اليمين لليسار مع العد من اليمين (1) إلى اليسار (5)
+                const stars = Array.from(rating.querySelectorAll('.star'));
+                const input = rating.querySelector('input[name^="responses"][name$="[rating]"]');
+                stars.forEach((star, index) => {
+                    star.addEventListener('mouseenter', () => {
+                        stars.forEach((s, i) => {
+                            s.classList.toggle('hovered', i >= index);
+                        });
+                    });
+
+                    star.addEventListener('mouseleave', () => {
+                        stars.forEach(s => s.classList.remove('hovered'));
+                    });
+
+                    star.addEventListener('click', () => {
+                        let count = 0;
+                        stars.forEach((s, i) => {
+                            if (i >= index) {
+                                s.classList.add('selected');
+                                count++;
+                            } else {
+                                s.classList.remove('selected');
+                            }
+                        });
+                        input.value = count;  // عدد النجوم التي أصبحت صفراء فعليًا
+                        console.log('عدد النجوم المختارة:', count);
+                        const qNumber = rating.getAttribute('data-question');
+                        nextQuestion(parseInt(qNumber));
+                    });
+                });
+            });
+        });
     </script>
 
 </body>

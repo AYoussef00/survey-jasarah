@@ -21,3 +21,5 @@ Route::get('/preparation', action: [ProjectController::class,'showPreprationPage
 Route::get('/qestions', action: [ProjectController::class,'showQuestionPage'])->name('question.view');
 
 Route::post('/attendance', [ProjectController::class, 'saveAttendance'])->name('attendance.save');
+Route::get('/view-questions', [ProjectController::class, 'getQuestions'])->name('questions.view');
+Route::post('/responses', [ProjectController::class, 'storeResponses'])->name('responses.store');

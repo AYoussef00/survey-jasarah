@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
 {
@@ -17,20 +18,42 @@ class ProjectController extends Controller
         return view(view: "pages.question");
     }
 
-    public function saveAttendance(Request $request)
+    public function getQuestions()
     {
+        $questions = DB::table('questions')->get();
+
+        return view('pages.question', ['questions' => $questions]);
+    }
+
+
+
+    public function storeResponses(Request $request)
+    {
+        // التحقق من صحة المدخلات
         $request->validate([
             'name' => 'required|string|max:255',
+            'responses' => 'required|array', // تأكد من أن الإجابات موجودة
         ]);
 
-        DB::table('students')->insert([
-            'name' => $request->input('name'),
-            'attendance_time' => Carbon::now('Asia/Riyadh')->format('H:i:s'),
-            'attendance_date' => Carbon::now('Asia/Riyadh')->toDateString(),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        // تخزين الإجابات في قاعدة البيانات
+        foreach ($request->responses as $question_id => $response) {
+            $data = [
+                'name' => $request->name,
+                'question_id' => $question_id,
+                'answers' => is_array($response) ? ($response['answer'] ?? null) : ($response == 'نعم' || $response == 'لا' ? $response : null),
+                'notes' => is_array($response) ? $response['notes'] ?? null : null,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
 
-        return redirect()->route('preparation.view')->with('status', 'شكراً لتسجيل حضورك');
+            // أضف التقييم فقط إذا كان موجودًا
+            if (is_array($response) && isset($response['rating'])) {
+                $data['rating'] = $response['rating'];
+            }
+
+            DB::table('responses')->insert($data);
+        }
+
+        return redirect()->back()->with('success', 'تم إرسال الإجابات بنجاح');
     }
 }
