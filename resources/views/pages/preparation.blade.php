@@ -62,7 +62,7 @@
             <img src="{{ asset('asset/images/second-logo.png') }}" alt="Side" style="width: 100px;">
             <img src="{{ asset('asset/images/logo.png') }}" alt="Logo" style="width: 200px;">
         </div>
-        <form method="POST" action="{{ route('attendance.save') }}" onsubmit="showLoading()">
+        <form method="POST" action="{{ route('students.attendance') }}" onsubmit="showLoading()">
             @csrf
             <input type="text" name="name" class="form-control" placeholder="ادخل الاسم بالكامل">
             <button type="submit" class="save-button">حفظ</button>
@@ -74,9 +74,9 @@
         </div>
 
         <!-- Success message -->
-        @if(session('status'))
+        @if(session('success'))
             <div style="background-color: #ffffff; border: 2px solid #28a745; color: #28a745; padding: 20px; border-radius: 12px; margin-top: 20px; font-size: 20px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                ✅ {{ session('status') }}
+                ✅ {{ session('success') }}
             </div>
         @endif
 

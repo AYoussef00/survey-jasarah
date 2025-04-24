@@ -56,4 +56,23 @@ class ProjectController extends Controller
 
         return redirect()->back()->with('success', 'تم إرسال الإجابات بنجاح');
     }
+
+    public function storeStudentAttendance(Request $request)
+    {
+        // التحقق من صحة الاسم
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        // حفظ بيانات الحضور
+        DB::table('students')->insert([
+            'name' => $request->name,
+            'attendance_time' => now('Asia/Riyadh')->format('H:i:s'),
+            'attendance_date' => now('Asia/Riyadh')->toDateString(),
+            'created_at' => now('Asia/Riyadh'),
+            'updated_at' => now('Asia/Riyadh'),
+        ]);
+
+        return redirect()->back()->with('success', 'تم التسجيل بنجاح');
+    }
 }
