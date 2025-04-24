@@ -212,6 +212,7 @@
                         @endfor
                         <input type="hidden" name="responses[{{ $question->id }}][rating]" id="q{{ $index + 1 }}" value="0">
                     </div>
+                    <button type="button" class="submit-btn mt-3" style="display:none;" id="next-btn-{{ $index + 1 }}" onclick="nextQuestion({{ $index + 1 }})">التالي</button>
                     <div class="d-flex justify-content-center">
                         <a href="{{ url('/') }}" class="home-link">العودة إلى الصفحة الرئيسية</a>
                     </div>
@@ -284,9 +285,8 @@
                             }
                         });
                         input.value = count;  // عدد النجوم التي أصبحت صفراء فعليًا
-                        console.log('عدد النجوم المختارة:', count);
                         const qNumber = rating.getAttribute('data-question');
-                        nextQuestion(parseInt(qNumber));
+                        document.getElementById('next-btn-' + qNumber).style.display = 'block';
                     });
                 });
             });
