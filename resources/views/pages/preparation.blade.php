@@ -64,7 +64,7 @@
         </div>
         <form method="POST" action="{{ route('students.attendance') }}" onsubmit="showLoading()">
             @csrf
-            <input type="text" name="name" class="form-control" placeholder="ادخل الاسم بالكامل">
+            <input type="text" name="name" class="form-control" placeholder="ادخل الاسم">
             <button type="submit" class="save-button">حفظ</button>
         </form>
 
