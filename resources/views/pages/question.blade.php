@@ -153,7 +153,7 @@
             @csrf
 
             <div id="user-info" class="question active">
-                <label for="username">من فضلك أدخل اسمك بالكامل:</label>
+                <label for="username">من فضلك أدخل اسمك:</label>
                 <input type="text" name="name" id="name" class="form-control mb-3" required>
                 <button type="button" class="submit-btn" onclick="goToFirstQuestion()">التالي</button>
                 <div class="d-flex justify-content-center">
