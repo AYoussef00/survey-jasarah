@@ -57,7 +57,7 @@
         <a href="{{ route('questions.view') }}" class="menu-button">الإستبيان</a>
         <a href="{{ asset('files/Agenda.pdf') }}" class="menu-button" target="_blank">عن البرنامج</a>
         <a href="{{ asset('files/guide.pdf') }}" class="menu-button" target="_blank">دليلك في مدريد</a>
-        <a href="https://www.google.com/maps/place/%D9%81%D9%86%D8%AF%D9%82+%D9%85%D8%A7%D9%86%D8%B3%D8%A7%D8%B1%D8%AF+%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6%D8%8C+%D8%B1%D8%A7%D8%AF%D9%8A%D8%B3%D9%88%D9%86+%D9%83%D9%88%D9%84%D9%8A%D9%83%D8%B4%D9%86%E2%80%AD/@24.7836736,46.6528016,17z/data=!3m1!4b1!4m9!3m8!1s0x3e2ee322ac19326f:0x22b5b911df192888!5m2!4m1!1i2!8m2!3d24.7836736!4d46.6528016!16s%2Fg%2F11dd_rlqxy?entry=ttu&g_ep=EgoyMDI1MDQxNi4xIKXMDSoASAFQAw%3D%3D" class="menu-button" target="_blank">IE university Tower</a>
+        <a href="https://maps.app.goo.gl/3kPomnkjWUUisSyB8?g_st=com.google.maps.preview.copy" class="menu-button" target="_blank">IE university Tower</a>
         <a href="#" class="menu-button" onclick="showContactModal(event)">تواصل معنا</a>
 
     </div>
