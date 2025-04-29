@@ -55,7 +55,7 @@
         </div>
         <a href="{{ route('preparation.view') }}" class="menu-button">تسجيل الحضور</a>
         <a href="{{ route('questions.view') }}" class="menu-button">الإستبيان</a>
-        <a href="{{ asset('files/Agenda.pdf') }}" class="menu-button" target="_blank">عن البرنامج</a>
+        <a href="{{ asset('files/agenda4.pdf') }}" class="menu-button" target="_blank">عن البرنامج</a>
         <a href="{{ asset('files/guide.pdf') }}" class="menu-button" target="_blank">دليلك في مدريد</a>
         <a href="https://maps.app.goo.gl/3kPomnkjWUUisSyB8?g_st=com.google.maps.preview.copy" class="menu-button" target="_blank">IE university Tower</a>
         <a href="#" class="menu-button" onclick="showContactModal(event)">تواصل معنا</a>
