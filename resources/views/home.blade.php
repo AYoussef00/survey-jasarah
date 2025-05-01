@@ -54,7 +54,7 @@
             <img src="{{ asset('asset/images/logo.png') }}" alt="Logo" style="width: 200px;">
         </div>
         <a href="https://ieuniversity.zoom.us/j/97181713644" class="menu-button" target="_blank">IE university Tower</a>
-        <a href="{{ asset('files/agenda4.pdf') }}" class="menu-button" target="_blank">عن البرنامج</a>
+        <a href="{{ asset('files/agenda.pdf') }}" class="menu-button" target="_blank">عن البرنامج</a>
         <a href="{{ asset('files/guide.pdf') }}" class="menu-button" target="_blank">دليلك في مدريد</a>
         <a href="https://maps.app.goo.gl/3kPomnkjWUUisSyB8?g_st=com.google.maps.preview.copy" class="menu-button" target="_blank">IE university Tower</a>
         <a href="#" class="menu-button" onclick="showContactModal(event)">تواصل معنا</a>
