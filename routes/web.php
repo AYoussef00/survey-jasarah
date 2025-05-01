@@ -2,11 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
-use App\Exports\QuestionsExport;
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\DB;
-use Maatwebsite\Excel\Concerns\FromCollection;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,27 +23,3 @@ Route::get('/qestions', action: [ProjectController::class,'showQuestionPage'])->
 Route::post('/attendance', [ProjectController::class, 'storeStudentAttendance'])->name('students.attendance');
 Route::get('/view-questions', [ProjectController::class, 'getQuestions'])->name('questions.view');
 Route::post('/responses', [ProjectController::class, 'storeResponses'])->name('responses.store');
-
-
-Route::get('/download-questions', function () {
-    return Excel::download(new QuestionsExport, 'questions.xlsx');
-});
-
-
-Route::get('/export-responses', function () {
-
-    // تعريف كلاس التصدير داخل الراوت مباشرة
-    new class implements FromCollection {
-        public function collection()
-        {
-            return DB::table('responses')->get();
-        }
-    };
-
-    return Excel::download(new class implements FromCollection {
-        public function collection()
-        {
-            return DB::table('responses')->get();
-        }
-    }, 'responses.xlsx');
-});

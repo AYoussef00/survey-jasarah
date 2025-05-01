@@ -53,8 +53,7 @@
             <img src="{{ asset('asset/images/second-logo.png') }}" alt="Side" style="width: 100px;">
             <img src="{{ asset('asset/images/logo.png') }}" alt="Logo" style="width: 200px;">
         </div>
-        <a href="{{ route('preparation.view') }}" class="menu-button">تسجيل الحضور</a>
-        <a href="{{ route('questions.view') }}" class="menu-button">الإستبيان</a>
+        <a href="https://ieuniversity.zoom.us/j/97181713644" class="menu-button" target="_blank">IE university Tower</a>
         <a href="{{ asset('files/agenda4.pdf') }}" class="menu-button" target="_blank">عن البرنامج</a>
         <a href="{{ asset('files/guide.pdf') }}" class="menu-button" target="_blank">دليلك في مدريد</a>
         <a href="https://maps.app.goo.gl/3kPomnkjWUUisSyB8?g_st=com.google.maps.preview.copy" class="menu-button" target="_blank">IE university Tower</a>
