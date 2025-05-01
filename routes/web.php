@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
+use App\Exports\QuestionsExport;
+use Maatwebsite\Excel\Facades\Excel;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,3 +25,8 @@ Route::get('/qestions', action: [ProjectController::class,'showQuestionPage'])->
 Route::post('/attendance', [ProjectController::class, 'storeStudentAttendance'])->name('students.attendance');
 Route::get('/view-questions', [ProjectController::class, 'getQuestions'])->name('questions.view');
 Route::post('/responses', [ProjectController::class, 'storeResponses'])->name('responses.store');
+
+
+Route::get('/download-questions', function () {
+    return Excel::download(new QuestionsExport, 'questions.xlsx');
+});
